@@ -15,10 +15,10 @@ jobs:
       - name: Fetch target branch
         run: git fetch --depth 1 origin ${TARGET_BRANCH}
       - name: Processing each file
-          run: |
-            for file in $(git diff origin/${TARGET_BRANCH} HEAD --diff-filter=AM) ; do
-              echo ${file} >> files
-            done
+        run: |
+          for file in $(git diff origin/${TARGET_BRANCH} HEAD --diff-filter=AM) ; do
+            echo ${file} >> files
+          done
       - name: Create comments
         run: |
           echo "1st" >> comments

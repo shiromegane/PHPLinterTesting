@@ -15,8 +15,8 @@ jobs:
         run: git fetch --depth 1 origin ${TARGET_BRANCH}
       - name: Processing each file
         run: |
-          for file in $(git diff origin/${TARGET_BRANCH} HEAD --diff-filter=AM --name-only) ; do
-            echo ${file}
+          for file in $(git diff origin/${TARGET_BRANCH} HEAD --diff-filter=AM --name-only '*.php') ; do
+            echo ${file} >> chage_files
           done
 #      - name: Create comments
 #        run: |
@@ -24,12 +24,12 @@ jobs:
 #          echo "2nd" >> comments
 #          echo "3rd" >> comments
 #          sed -i -z 's/\n/\\n/g' comments
-#      - name: Post multi-line comments
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          URL: ${{ github.event.pull_request.comments_url }}
-#        run: |
-#          curl -X POST \
-#               -H "Authorization: token ${GITHUB_TOKEN}" \
-#               -d "{\"body\": \"# タイトル\n$(cat comments)\"}" \
-#               ${URL}
+      - name: Post multi-line comments
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          URL: ${{ github.event.pull_request.comments_url }}
+        run: |
+          curl -X POST \
+               -H "Authorization: token ${GITHUB_TOKEN}" \
+               -d "{\"body\": \"# Post from Github Actions\n## Change files\n$(cat chage_files)\"}" \
+               ${URL}

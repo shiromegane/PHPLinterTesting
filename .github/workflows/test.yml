@@ -3,7 +3,6 @@ on:
   pull_request:
     types: synchronize
 env:
-  # プルリクエストのターゲットブランチ
   TARGET_BRANCH: ${{ github.base_ref }}
 jobs:
   comment_test:
@@ -17,20 +16,20 @@ jobs:
       - name: Processing each file
         run: |
           for file in $(git diff origin/${TARGET_BRANCH} HEAD --diff-filter=AM) ; do
-            echo ${file} >> files
+            echo ${file}
           done
-      - name: Create comments
-        run: |
-          echo "1st" >> comments
-          echo "2nd" >> comments
-          echo "3rd" >> comments
-          sed -i -z 's/\n/\\n/g' comments
-      - name: Post multi-line comments
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          URL: ${{ github.event.pull_request.comments_url }}
-        run: |
-          curl -X POST \
-               -H "Authorization: token ${GITHUB_TOKEN}" \
-               -d "{\"body\": \"# タイトル\n## Chage files\n$(cat files)\n$(cat comments)\"}" \
-               ${URL}
+#      - name: Create comments
+#        run: |
+#          echo "1st" >> comments
+#          echo "2nd" >> comments
+#          echo "3rd" >> comments
+#          sed -i -z 's/\n/\\n/g' comments
+#      - name: Post multi-line comments
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          URL: ${{ github.event.pull_request.comments_url }}
+#        run: |
+#          curl -X POST \
+#               -H "Authorization: token ${GITHUB_TOKEN}" \
+#               -d "{\"body\": \"# タイトル\n$(cat comments)\"}" \
+#               ${URL}

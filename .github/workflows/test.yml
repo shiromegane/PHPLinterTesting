@@ -2,12 +2,23 @@ name: TestAction
 on:
   pull_request:
     types: synchronize
-
+env:
+  # プルリクエストのターゲットブランチ
+  TARGET_BRANCH: ${{ github.base_ref }}
 jobs:
   comment_test:
     name: Comment Test
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Fetch target branch
+        run: git fetch --depth 1 origin ${TARGET_BRANCH}
+      - name: Processing each file
+          run: |
+            for file in $(git diff origin/${TARGET_BRANCH} HEAD --diff-filter=AM) ; do
+              echo ${file} >> files
+            done
       - name: Create comments
         run: |
           echo "1st" >> comments
@@ -21,5 +32,5 @@ jobs:
         run: |
           curl -X POST \
                -H "Authorization: token ${GITHUB_TOKEN}" \
-               -d "{\"body\": \"# タイトル\n$(cat comments)\"}" \
+               -d "{\"body\": \"# タイトル\n## Chage files\n$(cat files)\n$(cat comments)\"}" \
                ${URL}

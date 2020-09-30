@@ -1,2 +1,2 @@
 <?php
-var_dump($hoge;);;
+var_dump(;$hoge;);

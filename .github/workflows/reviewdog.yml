@@ -13,10 +13,8 @@ jobs:
           command: global require overtrue/phplint "squizlabs/php_codesniffer=*"
       - name: PWD
         run: pwd
-      - name: LS
-        run: ls -la
-#      - name: PHPLint
-#        run: ./vendor/bin/phplint
+      - name: PHPLint
+        run: vendor/bin/phplint
       - name: Set up reviewdog
         uses: reviewdog/action-setup@v1
       - name: Check reviewdog version

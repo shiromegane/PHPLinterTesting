@@ -22,7 +22,7 @@ jobs:
       - name: Check reviewdog version
         run: reviewdog -version
       - name: PHPCS
-        run: ./vendor/bin/phpcs --report=emacs --standard=phpcs.xml ./ | reviewdog -reporter=github-pr-review -efm='%f:%l:%c:%m'
+        run: /tmp/vendor/bin/phpcs --report=emacs --standard=phpcs.xml ./ | reviewdog -reporter=github-pr-review -efm='%f:%l:%c:%m'
 #      - uses: hrysd/action-php_codesniffer@master
 #        with:
 #          github_token: ${{ secrets.github_token }}

@@ -2,7 +2,7 @@ name: ReviewdogTest
 on: [ pull_request ]
 
 jobs:
-  php_codesniffer:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -12,7 +12,7 @@ jobs:
         with:
           command: global require overtrue/phplint "squizlabs/php_codesniffer=*"
       - name: PHPLint
-        run: /tmp/vendor/bin/phplint
+        run: ./vendor/bin/phplint
       - name: Set up reviewdog
         uses: reviewdog/action-setup@v1
       - name: Check reviewdog version

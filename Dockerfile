@@ -4,6 +4,7 @@ ARG PHP_VERSION=7.4
 FROM composer:${COMPOSER_VERSION} AS build
 RUN composer global require overtrue/phplint
 RUN composer global require "squizlabs/php_codesniffer=*"
+RUN composer global require sider/phinder
 
 FROM php:${PHP_VERSION}-cli-alpine
 COPY --from=build /tmp/vendor /root/.composer/vendor

@@ -8,6 +8,7 @@ jobs:
       - uses: actions/checkout@master
       - name: Set up reviewdog
         uses: reviewdog/action-setup@v1
+      - name: Check reviewdog version
         run: reviewdog -version
       - uses: hrysd/action-php_codesniffer@master
         with:

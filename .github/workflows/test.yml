@@ -13,23 +13,22 @@ jobs:
         uses: actions/checkout@master
       - name: Fetch target branch
         run: git fetch --depth 1 origin ${TARGET_BRANCH}
-      - name: Processing each file
+      - name: Check syntax errors
+        uses: overtrue/phplint@master
+#        with:
+#          path: .
+#          options: --exclude=*.log
+      - name: Extract diff files
         run: |
           for file in $(git diff origin/${TARGET_BRANCH} HEAD --diff-filter=AM --name-only '*.php') ; do
-            echo ${file} >> chage_files
+            echo ${file} >> diff_files
           done
-#      - name: Create comments
-#        run: |
-#          echo "1st" >> comments
-#          echo "2nd" >> comments
-#          echo "3rd" >> comments
-#          sed -i -z 's/\n/\\n/g' comments
-      - name: Post multi-line comments
+      - name: Post comment to pull request
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           URL: ${{ github.event.pull_request.comments_url }}
         run: |
           curl -X POST \
                -H "Authorization: token ${GITHUB_TOKEN}" \
-               -d "{\"body\": \"# Post from Github Actions\n## Change files\n$(cat chage_files)\"}" \
+               -d "{\"body\": \"# Post from Github Actions\n## Change files\n$(cat diff_files)\"}" \
                ${URL}

@@ -1,17 +1,18 @@
-name: reviewdog
+name: ReviewdogTest
 on: [ pull_request ]
 
 jobs:
   php_codesniffer:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - name: Checkout
+        uses: actions/checkout@master
       - name: Set up reviewdog
         uses: reviewdog/action-setup@v1
       - name: Check reviewdog version
         run: reviewdog -version
-      - uses: hrysd/action-php_codesniffer@master
-        with:
-          github_token: ${{ secrets.github_token }}
-          standard: PSR12
-          target_directory: .
+#      - uses: hrysd/action-php_codesniffer@master
+#        with:
+#          github_token: ${{ secrets.github_token }}
+#          standard: PSR12
+#          target_directory: .

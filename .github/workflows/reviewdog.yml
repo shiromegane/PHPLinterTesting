@@ -1,6 +1,7 @@
 name: ReviewdogTest
 on: [ pull_request ]
-
+env:
+  REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -10,15 +11,18 @@ jobs:
       - name: Composer install
         uses: php-actions/composer@v2
         with:
+          quiet: yes
           command: global require overtrue/phplint "squizlabs/php_codesniffer=*"
       - name: PWD
         run: pwd
-      - name: PHPLint
-        run: vendor/bin/phplint
+#      - name: Lint
+#        run: /tmp/vendor/bin/phplint
       - name: Set up reviewdog
         uses: reviewdog/action-setup@v1
       - name: Check reviewdog version
         run: reviewdog -version
+      - name: PHPCS
+        run: ./vendor/bin/phpcs --report=emacs --standard=phpcs.xml ./ | reviewdog -reporter=github-pr-review -efm='%f:%l:%c:%m'
 #      - uses: hrysd/action-php_codesniffer@master
 #        with:
 #          github_token: ${{ secrets.github_token }}

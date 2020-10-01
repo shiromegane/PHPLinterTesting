@@ -7,6 +7,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
+      - name: Composer install
+        uses: php-actions/composer@v2
+        with:
+          command: |
+            composer global require overtrue/phplint &&
+            composer global require "squizlabs/php_codesniffer=*"
+      - name: Check installed
+        run:
       - name: Set up reviewdog
         uses: reviewdog/action-setup@v1
       - name: Check reviewdog version

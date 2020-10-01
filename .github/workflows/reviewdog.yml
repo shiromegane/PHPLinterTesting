@@ -8,13 +8,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
-      - name: Composer install
-        uses: php-actions/composer@v2
-        with:
-          quiet: yes
-          command: global require overtrue/phplint "squizlabs/php_codesniffer=*"
-      - name: PWD
-        run: pwd
+#      - name: Composer install
+#        uses: php-actions/composer@v2
+#        with:
+#          quiet: yes
+#          command: global require overtrue/phplint "squizlabs/php_codesniffer=*"
+#      - name: PWD
+#        run: pwd
 #      - name: Lint
 #        run: /tmp/vendor/bin/phplint
       - name: Set up reviewdog
@@ -22,7 +22,14 @@ jobs:
       - name: Check reviewdog version
         run: reviewdog -version
       - name: PHPCS
-        run: /tmp/vendor/bin/phpcs --report=emacs --standard=phpcs.xml ./ | reviewdog -reporter=github-pr-review -efm='%f:%l:%c:%m'
+        uses: hrysd/action-php_codesniffer@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          standard: PSR12
+          target_directory: .
+          reporter: github-pr-review
+#      - name: PHPCS
+#        run: /tmp/vendor/bin/phpcs --report=emacs --standard=phpcs.xml ./ | reviewdog -reporter=github-pr-review -efm='%f:%l:%c:%m'
 #      - uses: hrysd/action-php_codesniffer@master
 #        with:
 #          github_token: ${{ secrets.github_token }}

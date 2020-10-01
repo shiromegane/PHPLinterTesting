@@ -13,8 +13,8 @@ jobs:
         uses: actions/checkout@master
       - name: Fetch target branch
         run: git fetch --depth 1 origin ${TARGET_BRANCH}
-      - name: Check syntax errors
-        uses: overtrue/phplint@master
+#      - name: Check syntax errors
+#        uses: overtrue/phplint@master
 #        with:
 #          path: .
 #          options: --exclude=*.log

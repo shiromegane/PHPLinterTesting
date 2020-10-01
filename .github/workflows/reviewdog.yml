@@ -21,20 +21,6 @@ jobs:
 #        uses: reviewdog/action-setup@master
 #      - name: Check reviewdog version
 #        run: reviewdog -version
-      - name: phpcs
-        uses: shirobrak/action-phpcs@v1.0.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: github-pr-review
-          phpcs_flags: '--standard=phpcs.xml .'
-          fail_on_error: true
-      - name: phpcs_with_error_code
-        uses: shirobrak/action-phpcs@v1.0.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: github-pr-review
-          phpcs_flags: '--standard=phpcs.xml .'
-          fail_on_error: true
       - name: PHPCS
         uses: hrysd/action-php_codesniffer@master
         with:
@@ -42,6 +28,19 @@ jobs:
           standard: PSR12
           target_directory: .
           reporter: github-pr-review
+      - name: phpcs
+        uses: shirobrak/action-phpcs@v1.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          phpcs_flags: '--standard=phpcs.xml ./'
+      - name: phpcs_with_error_code
+        uses: shirobrak/action-phpcs@v1.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          phpcs_flags: '--standard=phpcs.xml ./'
+          fail_on_error: true
 #      - name: PHPCS
 #        run: /tmp/vendor/bin/phpcs --report=emacs --standard=phpcs.xml ./ | reviewdog -reporter=github-pr-review -efm='%f:%l:%c:%m'
 #      - uses: hrysd/action-php_codesniffer@master

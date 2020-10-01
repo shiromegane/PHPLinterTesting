@@ -17,10 +17,24 @@ jobs:
 #        run: pwd
 #      - name: Lint
 #        run: /tmp/vendor/bin/phplint
-      - name: Set up reviewdog
-        uses: reviewdog/action-setup@master
-      - name: Check reviewdog version
-        run: reviewdog -version
+#      - name: Set up reviewdog
+#        uses: reviewdog/action-setup@master
+#      - name: Check reviewdog version
+#        run: reviewdog -version
+      - name: phpcs
+        uses: shirobrak/action-phpcs@v1.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          phpcs_flags: '--standard=phpcs.xml .'
+          fail_on_error: true
+      - name: phpcs_with_error_code
+        uses: shirobrak/action-phpcs@v1.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          phpcs_flags: '--standard=phpcs.xml .'
+          fail_on_error: true
       - name: PHPCS
         uses: hrysd/action-php_codesniffer@master
         with:

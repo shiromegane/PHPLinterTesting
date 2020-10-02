@@ -1,4 +1,4 @@
-name: ReviewdogTest
+name: PHP Analyse dog
 on: [ pull_request ]
 jobs:
   php-analyse-dog:

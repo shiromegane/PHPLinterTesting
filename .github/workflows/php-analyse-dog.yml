@@ -7,7 +7,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
       - name: PHP Analyse dog
-        uses: shiromegane/php-analyse-dog@0.0.1
+        uses: shiromegane/php-analyse-dog@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           phpcs_args: '--standard=phpcs.xml --report=json -q .'

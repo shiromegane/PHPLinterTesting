@@ -25,3 +25,4 @@ elif [ $phpcs_status = 2 ]; then
 else
   echo 'No errors found.'
 fi
+

@@ -1,0 +1,15 @@
+name: PHP Analyse dog
+on: [ pull_request ]
+jobs:
+  php-analyse-dog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: PHP Analyse dog
+        uses: shiromegane/php-analyse-dog@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          enable_phpmd: true
+          enable_phinder: true
+          phpcs_args: '--standard=phpcs.xml --report=json -q .'

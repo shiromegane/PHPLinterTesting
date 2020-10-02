@@ -10,4 +10,6 @@ jobs:
         uses: shiromegane/php-analyse-dog@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          enable_phpmd: true
+          enable_phinder: true
           phpcs_args: '--standard=phpcs.xml --report=json -q .'
